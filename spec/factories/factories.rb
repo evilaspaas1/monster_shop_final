@@ -33,7 +33,7 @@ FactoryBot.define do
     rating { 5 }
   end
 
-  factory :user do
+  factory :user, aliases: [:employee] do
     sequence(:name) { |n| "User #{n}" }
     address { "Cool Street" }
     city { "Rubyville" }
