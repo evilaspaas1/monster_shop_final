@@ -1,0 +1,13 @@
+<%= content_tag :h1, "My bulk discounts" %>
+
+<% if @discounts.empty? %>
+  <%= content_tag :h3, "You have no discounts." %>
+<% else %>
+  <% @discounts.each do |discount| %>
+    <section class="discount-<%= discount.id %>">
+      <%= content_tag :p, "Quantity: #{discount.bulk_quantity}" %>
+      <%= content_tag :p, "Discount: #{discount.percentage_discount}%" %>
+      <%= content_tag :p, "Created At: #{discount.created_at.to_s(:short)}" %>
+    </section>
+  <% end %>
+<% end %>
