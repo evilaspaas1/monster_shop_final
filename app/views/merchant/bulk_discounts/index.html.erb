@@ -9,6 +9,7 @@
       <%= content_tag :p, "Discount: #{discount.percentage_discount}%" %>
       <%= content_tag :p, "Created At: #{discount.created_at.to_s(:short)}" %>
       <%= link_to "Update Discount", "/merchant/discounts/#{discount.id}/edit" %>
+      <%= button_to "Delete", merchant_discount_path(discount), method: :delete %>
     </section>
   <% end %>
 <% end %>
