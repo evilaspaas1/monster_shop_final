@@ -37,7 +37,12 @@ class Cart
   end
 
   def subtotal_of(item_id)
-    @contents[item_id.to_s] * Item.find(item_id).price
+    subtotal = @contents[item_id.to_s] * Item.find(item_id).price
+
+    discounts = Item.find(item_id).merchant.bulk_discounts
+    discount = discounts.find_eligible_discount(count_of(item_id))
+
+    discount ? discount.calculate_discount(subtotal) : subtotal
   end
 
   def limit_reached?(item_id)
