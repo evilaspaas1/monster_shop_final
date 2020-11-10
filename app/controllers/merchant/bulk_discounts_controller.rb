@@ -20,6 +20,21 @@ class Merchant::BulkDiscountsController < Merchant::BaseController
     end
   end
 
+  def edit
+    @discount = BulkDiscount.find(params[:id])
+  end
+
+  def update
+    @discount = BulkDiscount.find(params[:id])
+    @discount.update(bulk_discount_params)
+    if @discount.save(bulk_discount_params)
+      redirect_to "/merchant/discounts"
+    else
+      generate_flash(@discount)
+      redirect_to "/merchant/discounts/#{@discount.id}/edit"
+    end
+  end
+
   private
 
   def bulk_discount_params
