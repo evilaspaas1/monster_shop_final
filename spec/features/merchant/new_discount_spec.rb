@@ -29,30 +29,58 @@ describe "As a merchant employee" do
 
       expect(BulkDiscount.count).to eq(1)
 
+      # fill_in :bulk_quantity, with: 30
+      fill_in :percentage_discount, with: 15
+      click_button "Create A Discount"
+
+      expect(BulkDiscount.count).to eq(1)
+      expect(current_path).to eq(new_merchant_discount_path)
+      expect(page).to have_content("bulk_quantity: [\"is not a number\"]")
+
+      #-------------------------------------------------------
+
+      expect(BulkDiscount.count).to eq(1)
+
       fill_in :bulk_quantity, with: 30
       # fill_in :percentage_discount, with: 15
       click_button "Create A Discount"
 
       expect(BulkDiscount.count).to eq(1)
       expect(current_path).to eq(new_merchant_discount_path)
+      expect(page).to have_content("percentage_discount: [\"Discount must be percentage from 1 - 100\"]")
+
+      #-------------------------------------------------------
+
+      expect(BulkDiscount.count).to eq(1)
+
+      # fill_in :bulk_quantity, with: 30
+      # fill_in :percentage_discount, with: 15
+      click_button "Create A Discount"
+
+      expect(BulkDiscount.count).to eq(1)
+      expect(current_path).to eq(new_merchant_discount_path)
+      expect(page).to have_content("bulk_quantity: [\"is not a number\"]")
+      expect(page).to have_content("percentage_discount: [\"Discount must be percentage from 1 - 100\"]")
 
       #-------------------------------------------------------
 
       fill_in :bulk_quantity, with: -1
       fill_in :percentage_discount, with: 10
-      click_button "Create Bulk Discount"
+      click_button "Create A Discount"
 
       expect(BulkDiscount.count).to eq(1)
       expect(current_path).to eq(new_merchant_discount_path)
+      expect(page).to have_content("bulk_quantity: [\"must be greater than 0\"]")
 
       #-------------------------------------------------------
 
       fill_in :bulk_quantity, with: 40
       fill_in :percentage_discount, with: -10
-      click_button "Create Bulk Discount"
+      click_button "Create A Discount"
 
       expect(BulkDiscount.count).to eq(1)
       expect(current_path).to eq(new_merchant_discount_path)
+      expect(page).to have_content("percentage_discount: [\"Discount must be percentage from 1 - 100\"]")
     end
   end
 end
