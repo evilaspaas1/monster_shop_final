@@ -49,6 +49,10 @@ RSpec.describe "Apply Discount in Cart Spec" do
           expect(page).to have_content("Subtotal: #{number_to_currency(@item2.price * 4)}")
           expect(page).to_not have_content("Discount applied")
         end
+
+        # testing that the total updates with correct price
+        expect(page).to_not have_content("Total: $450.00")
+        expect(page).to have_content("Total: $445.00")
       end
 
       it "Bulk discounts only apply to specific merchants with that discount" do
