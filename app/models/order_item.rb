@@ -3,7 +3,12 @@ class OrderItem < ApplicationRecord
   belongs_to :item
 
   def subtotal
-    quantity * price
+    subtotal = quantity * price
+
+    discounts = self.item.merchant.bulk_discounts
+    discount = discounts.find_eligible_discount(quantity)
+
+    discount ? discount.calculate_discount(subtotal) : subtotal
   end
 
   def fulfill
