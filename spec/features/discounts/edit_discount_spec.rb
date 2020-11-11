@@ -12,7 +12,7 @@ describe "As a merchant employee" do
       @percentage = 10
     end
 
-    xit "I can edit my discount through a edit link" do
+    it "I can edit my discount through a edit link" do
       # Feature works on local host but test wont update @discount1
       visit merchant_discounts_path
       click_link "Update Discount"
@@ -24,10 +24,12 @@ describe "As a merchant employee" do
 
       click_button "Update Bulk Discount"
       @discount1.reload
-      # binding.pry
+
       expect(current_path).to eq("/merchant/discounts")
-      expect(page).to have_content(@quantity)
-      expect(page).to have_content(@percentage)
+      expect(@discount1.bulk_quantity).to eq(25)
+      expect(@discount1.percentage_discount).to eq(10)
+      # expect(page).to have_content(@quantity)
+      # expect(page).to have_content(@percentage)
     end
 
     it "I can't edit the dicount with bad or no information" do
